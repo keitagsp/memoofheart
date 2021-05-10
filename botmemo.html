@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>心のメモ</title>
+  <link rel="stylesheet" href="css/sample.css">
+
+
+  <!-- ↓↓↓↓↓↓↓↓↓ フォント ↓↓↓↓↓↓↓↓↓ -->
+
+<script>
+  (function (d) {
+    var config = {
+      kitId: 'bct0ufe',
+      scriptTimeout: 3000,
+      async: true
+    },
+      h = d.documentElement, t = setTimeout(function () { h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive"; }, config.scriptTimeout), tk = d.createElement("script"), f = false, s = d.getElementsByTagName("script")[0], a; h.className += " wf-loading"; tk.src = 'https://use.typekit.net/' + config.kitId + '.js'; tk.async = true; tk.onload = tk.onreadystatechange = function () { a = this.readyState; if (f || a && a != "complete" && a != "loaded") return; f = true; clearTimeout(t); try { Typekit.load(config) } catch (e) { } }; s.parentNode.insertBefore(tk, s)
+  })(document);
+</script>
+  <!-- ↑↑↑↑↑↑↑↑ フォント ↑↑↑↑↑↑↑↑ -->
+
+
+</head>
+
+<body>
+
+
+
+  <header>
+    <div class="number">
+      <p>~Number~</p>
+    </div>
+
+    <div class="page" id="page">
+      <p>001</p>
+    </div>
+
+  </header>
+
+  <div class="main">
+
+    <div id="text" contenteditable="true">
+      本当に迷った時は素直になるといい。一点の曇りもない自分に聞いてみるといい。生まれたままの自分にだ。そして、それを行動しよう。たとえ、それが社会的な面で不正解や失敗だったとしてもあなたの人生では正しいはずだ。
+    </div>
+
+    <div id="title" contenteditable="true">
+      答えは自分が知っている
+    </div>
+
+  </div>
+
+
+  <div class="memory">
+    <p id="save">記録する</p>
+    <p id="next">次へ</p>
+    <p id="clear">消す</p>
+  </div>
+
+  <!--↓↓↓↓↓↓↓↓↓ ここからjquery ↓↓↓↓↓↓↓↓↓-->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script>
+
+
+    $(function () {
+      //1.Save クリックイベント
+      $('#save').on('click', function () {
+        const text = $('#text').html();
+        const title = $('#title').html();
+        const obj = {
+          '#text': text,
+          '#title': title
+        };
+        const jsonDate = JSON.stringify(obj)
+        localStorage.setItem('心のメモ', jsonDate);
+      });
+
+
+      //2.clear クリックイベント
+      $('#clear').on('click', function () {
+        localStorage.removeItem('心のメモ');
+        $('#text').val('');
+        $('#title').val('');
+      });
+
+
+      //3.ページ読み込み：保存データ取得表示
+      if (localStorage.getItem('心のメモ')) {
+        const jsonDate_get = localStorage.getItem('心のメモ');
+        const obj_get = JSON.parse(jsonDate_get);
+        $('#text').html(obj_get.text);
+        $('#title').html(obj_get.title);
+
+      };
+
+
+      //4.next クリックイベント
+      $('#next').on('click', function () {
+        $('#text').html('');
+        $('#title').html('');
+      })
+
+
+    });
+
+  </script>
+
+
+
+</body>
+
+</html>
