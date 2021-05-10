@@ -35,8 +35,8 @@
       <p>~Number~</p>
     </div>
 
-    <div class="page" id="page">
-      <p>001</p>
+    <div class="page" id="disp_count">
+      0
     </div>
 
   </header>
@@ -54,10 +54,11 @@
   </div>
 
 
-  <div class="memory">
-    <p id="save">記録する</p>
-    <p id="next">次へ</p>
+  <div class="memory">  
     <p id="clear">消す</p>
+    <p id="prev">前へ</p>
+    <p id="next">次へ</p>
+    <p id="save">記録する</p>
   </div>
 
   <!--↓↓↓↓↓↓↓↓↓ ここからjquery ↓↓↓↓↓↓↓↓↓-->
@@ -77,21 +78,21 @@
           '#title': title
         };
         const jsonDate = JSON.stringify(obj)
-        localStorage.setItem('心のメモ', jsonDate);
+        localStorage.setItem('心のメモ'+ count_value, jsonDate);
       });
 
 
       //2.clear クリックイベント
       $('#clear').on('click', function () {
-        localStorage.removeItem('心のメモ');
+        localStorage.removeItem('心のメモ' + count_value);
         $('#text').val('');
         $('#title').val('');
       });
 
 
       //3.ページ読み込み：保存データ取得表示
-      if (localStorage.getItem('心のメモ')) {
-        const jsonDate_get = localStorage.getItem('心のメモ');
+      if (localStorage.getItem('心のメモ' + count_value)) {
+        const jsonDate_get = localStorage.getItem('心のメモ' + count_value);
         const obj_get = JSON.parse(jsonDate_get);
         $('#text').html(obj_get.text);
         $('#title').html(obj_get.title);
@@ -103,10 +104,31 @@
       $('#next').on('click', function () {
         $('#text').html('');
         $('#title').html('');
+        count_value += 1;
+        count_disp.innerHTML = count_value;
+      })
+      
+      
+      //5.prev クリックイベント
+      $('#prev').on('click', function (){
+        count_value -= 1;
+        count_disp.innerHTML = count_value;
       })
 
 
     });
+
+    // オブジェクトと変数の準備
+
+      const count_disp = document.getElementById("disp_count");
+      const next = document.getElementById("next");
+      const reset_btn = document.getElementById("btn_reset");
+      // ここはvarじゃないと変わらない
+      var count_value = 0;
+
+
+
+    
 
   </script>
 

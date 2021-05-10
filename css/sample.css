@@ -97,7 +97,7 @@ display: flex;
 justify-content: center;
 }
 
-#save,#next,#clear{
+#save,#next,#prev,#clear{
     font-family: source-han-serif-japanese;
     font-size: 16px;
     padding: 0px 70px;
